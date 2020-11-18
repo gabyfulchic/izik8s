@@ -11,10 +11,37 @@ new tool on your company's Kubernetes Development cluster.
 You can find a detailed description [here](description.md).  
 And my personal objectives around this project [here](goal.md).  
 Feel free to contact me if you want to contribute or discuss about the project : https://gitter.im/izik8s/community  
+
+## Dependencies
+
+* Ansible  
+```bash
+pip install -r requirements.txt
+```
+
+* Vagrant-libvirt  
+[Vagrantfile](Vagrantfile#L18)
   
-## Installation   
-  
-## Getting started  
-  
-## Documentation  
-  
+* KVM
+```bash
+sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+```
+
+* Vagrant
+```bash
+curl https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.13_linux_amd64.zip --output vagrant_2.2.10_linux_amd64.zip
+unzip vagrant_2.2.13_linux_amd64.zip
+```
+
+## Deploy your cluster
+
+* edit IPs' prefix according to your desires  
+```bash
+GNU # sed -i "s/ip_prefix = '10.33.0.'/ip_prefix = '192.168.1.'/g" Vagrantfile
+BSD # sed -i "" -e "s/ip_prefix = '10.33.0.'/ip_prefix = '192.168.1.'/g" Vagrantfile
+```
+
+* Up your environment
+```bash
+vagrant up
+```
