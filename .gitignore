@@ -1,0 +1,7 @@
+rapports
+*.swp
+*.retry
+*.pyc
+*.zip
+.vagrant/
+ci.txt
