@@ -1,0 +1,7 @@
+---
+- name: Deploy Kubernetes Cluster
+  hosts: all
+  tasks:
+  - name: 1 step by step
+    debug:
+      msg: "Hello World"
