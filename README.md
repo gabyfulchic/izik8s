@@ -20,8 +20,8 @@ pip install -r requirements.txt
 ```
 
 * Vagrant-libvirt  
-[Vagrantfile](Vagrantfile#L18)
-  
+[Vagrantfile](Vagrantfile)
+
 * KVM
 ```bash
 sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
@@ -43,5 +43,13 @@ BSD # sed -i "" -e "s/ip_prefix = '10.33.0.'/ip_prefix = '192.168.1.'/g" Vagrant
 
 * Up your environment
 ```bash
-vagrant up
+! WORKAROUND ! https://github.com/vagrant-libvirt/vagrant-libvirt#using-docker-based-installation
+docker run -it --rm \
+  -e LIBVIRT_DEFAULT_URI \
+  -v /var/run/libvirt/:/var/run/libvirt/ \
+  -v ~/.vagrant.d:/.vagrant.d \
+  -v $(pwd):$(pwd) \
+  -w $(pwd) \
+  vagrantlibvirt/vagrant-libvirt:latest \
+    vagrant up
 ```
