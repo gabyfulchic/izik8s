@@ -1,0 +1,25 @@
+---
+- name: Deploy Kubernetes Cluster
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Install haproxy
+    apt:
+      name: haproxy
+      state: present
+  - name: Provision haproxy cfg
+    copy:
+      src: haproxy.cfg
+      dest: /etc/haproxy/haproxy.cfg
+      owner: root
+      group: root
+      mode: 0644
+    notify: 
+      - Restart haproxy
+
+  handlers:
+    - name: Restart haproxy
+      systemd:
+        name: haproxy
+        state: restarted

@@ -14,32 +14,23 @@ Feel free to contact me if you want to contribute or discuss about the project :
 
 ## Dependencies
 
-* Vagrant 2.2.13
+* Ansible  
+```bash
+pip install -r requirements.txt
+```
+
+* Vagrant-libvirt  
+[Vagrantfile](Vagrantfile)
+
+* KVM
+```bash
+sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+```
+
+* Vagrant
 ```bash
 curl https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.13_linux_amd64.zip --output vagrant_2.2.10_linux_amd64.zip
 unzip vagrant_2.2.13_linux_amd64.zip
-```
-
-* Virtualbox 6.0.6
-```bash
-https://www.virtualbox.org/wiki/Linux_Downloads
-```
-
-* Virtualbox Guest Additions 6.0.6 (for optimizations + shared folders etc...)
-```bash
-sudo apt-get install linux-headers-$(uname -r) build-essential dkms
-wget http://download.virtualbox.org/virtualbox/6.0.6/VBoxGuestAdditions_6.0.6.iso
-sudo mkdir /media/VBoxGuestAdditions
-sudo mount -o loop,ro VBoxGuestAdditions_6.0.6.iso /media/VBoxGuestAdditions
-sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
-rm VBoxGuestAdditions_6.0.6.iso
-sudo umount /media/VBoxGuestAdditions
-sudo rmdir /media/VBoxGuestAdditions
-```
-
-* Ansible 2.10.3  
-```bash
-pip install -r requirements.txt
 ```
 
 ## Deploy your cluster
@@ -52,5 +43,13 @@ BSD # sed -i "" -e "s/ip_prefix = '10.33.0.'/ip_prefix = '192.168.1.'/g" Vagrant
 
 * Up your environment
 ```bash
-vagrant up
+! WORKAROUND ! https://github.com/vagrant-libvirt/vagrant-libvirt#using-docker-based-installation
+docker run -it --rm \
+  -e LIBVIRT_DEFAULT_URI \
+  -v /var/run/libvirt/:/var/run/libvirt/ \
+  -v ~/.vagrant.d:/.vagrant.d \
+  -v $(pwd):$(pwd) \
+  -w $(pwd) \
+  vagrantlibvirt/vagrant-libvirt:latest \
+    vagrant up
 ```

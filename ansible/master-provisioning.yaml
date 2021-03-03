@@ -1,6 +1,7 @@
 ---
 - name: Deploy Kubernetes Cluster
   hosts: all
+  become: true
   tasks:
   - name: 1 step by step
     debug:
